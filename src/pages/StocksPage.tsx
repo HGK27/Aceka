@@ -46,7 +46,6 @@ export function StocksPage() {
     handleDeleteClick,
   );
 
-  // clearSelection'ı handleDeleteManyClick ile birleştir
   const handleDeleteMany = useCallback(
     (ids: number[]) => {
       handleDeleteManyClick(ids);

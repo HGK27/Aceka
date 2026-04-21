@@ -55,7 +55,7 @@ function randomDate(start: Date, end: Date) {
   );
 }
 
-export const mockStocks: Stock[] = Array.from({ length: 200 }).map((_, i) => {
+export const mockStocks: Stock[] = Array.from({ length: 50000 }).map((_, i) => {
   const created = randomDate(new Date(2025, 0, 1), new Date(2025, 6, 1));
   const updated = randomDate(created, new Date(2026, 3, 1));
 
