@@ -40,7 +40,7 @@ export function stockColumns(
       header: "ID",
       size: 60,
       cell: (info) => (
-        <span className="text-slate-400 text-xs font-mono">
+        <span className="text-slate-400 text-xs font-mono dark:text-slate-600">
           #{info.getValue()}
         </span>
       ),
@@ -50,11 +50,11 @@ export function stockColumns(
       header: "Ürün Adı",
       cell: (info) => (
         <div>
-          <p className="font-semibold text-slate-800 text-sm">
+          <p className="font-semibold text-slate-800 text-sm dark:text-slate-800 truncate">
             {info.getValue()}
           </p>
           {info.row.original.description && (
-            <p className="text-xs text-slate-400 truncate">
+            <p className="text-xs text-slate-400 dark:text-slate-600 truncate">
               {info.row.original.description}
             </p>
           )}
