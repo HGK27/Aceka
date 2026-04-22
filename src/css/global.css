@@ -1,2 +1,22 @@
-@import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* LIGHT = DEFAULT */
+:root {
+  --color-primary: 30 41 59;
+  --color-primary-foreground: 255 255 255;
+
+  --color-bg: 249 248 243;
+  --color-surface: 255 255 255;
+  --color-text: 15 23 42;
+}
+
+/* DARK MODE */
+.dark {
+  --color-primary: 249 248 243;
+  --color-primary-foreground: 15 23 42;
+
+  --color-bg: 30 41 59;
+  --color-surface: 51 65 85;
+  --color-text: 248 250 252;
+}

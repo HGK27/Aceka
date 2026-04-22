@@ -8,10 +8,15 @@ interface FormFieldProps {
 
 export const FormField = memo(({ label, error, children }: FormFieldProps) => (
   <div className="space-y-1">
-    <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wide">
+    {/* LABEL */}
+    <label className="block text-xs font-semibold text-text/60 tracking-wide">
       {label}
     </label>
+
+    {/* INPUT */}
     {children}
-    {error && <p className="text-xs text-red-500">{error}</p>}
+
+    {/* ERROR */}
+    {error && <p className="text-xs text-red-500/90">{error}</p>}
   </div>
 ));

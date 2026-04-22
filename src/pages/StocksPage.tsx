@@ -1,6 +1,9 @@
 import { useState, useCallback } from "react";
+
 import { useStocks } from "../hooks/useStocks";
 import { useStockTable } from "../hooks/useStockTable";
+import { useStockModals } from "../hooks/useStockModals";
+
 import { StockTable } from "../components/table/StockTable";
 import { StockFiltersComponent } from "../components/filters/StockFilters";
 import { StockModal } from "../components/modal/StockModal";
@@ -9,7 +12,6 @@ import { StatsCards } from "../components/cards/StatsCards";
 import { useTheme } from "../context/ThemeContext";
 import { ExportModal } from "../components/modal/ExportModal";
 import { PageHeader } from "../components/header/StockPageHeader";
-import { useStockModals } from "../hooks/useStockModals";
 
 import type { StockFilters as FiltersType } from "../types/stock";
 
@@ -37,6 +39,8 @@ export function StocksPage() {
     handleConfirmDelete,
     handleConfirmDeleteMany,
     openAddModal,
+    setDeleteTarget,
+    setDeleteManyTarget,
   } = useStockModals(deleteStock, deleteMany, addStock, updateStock);
 
   const { table, selectedIds, clearSelection } = useStockTable(
@@ -57,7 +61,7 @@ export function StocksPage() {
   const filteredCount = table.getFilteredRowModel().rows.length;
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-900">
+    <div className="min-h-screen bg-background text-text">
       <PageHeader
         onExport={() => setExportOpen(true)}
         onAddStock={openAddModal}
@@ -92,7 +96,7 @@ export function StocksPage() {
         count={1}
         onConfirm={handleConfirmDelete}
         onCancel={() => {
-          /* setDeleteTarget(null) */
+          setDeleteTarget(null);
         }}
       />
       <DeleteConfirmModal
@@ -100,7 +104,7 @@ export function StocksPage() {
         count={deleteManyTarget.length}
         onConfirm={handleConfirmDeleteMany}
         onCancel={() => {
-          /* setDeleteManyTarget([]) */
+          setDeleteManyTarget([]);
         }}
       />
       <ExportModal

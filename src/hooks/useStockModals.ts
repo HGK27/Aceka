@@ -60,6 +60,8 @@ export function useStockModals(
     deleteTarget,
     deleteManyTarget,
     // handlers
+    setDeleteTarget,
+    setDeleteManyTarget,
     handleEdit,
     handleDeleteClick,
     handleDeleteManyClick,

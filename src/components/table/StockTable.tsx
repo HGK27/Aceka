@@ -17,13 +17,13 @@ export function StockTable({ table, selectedIds, onDeleteMany }: Props) {
   const totalRows = table.getFilteredRowModel().rows.length;
   const pageCount = table.getPageCount();
 
-  // BulkActionBar'a geçilen callback stabil olsun
   const handleDeleteMany = useCallback(
     () => onDeleteMany(selectedIds),
     [onDeleteMany, selectedIds],
   );
+
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+    <div className="bg-white/90 rounded-2xl shadow-sm border border-white/10 overflow-hidden">
       <BulkActionBar
         count={selectedIds.length}
         onDeleteMany={handleDeleteMany}
@@ -31,21 +31,24 @@ export function StockTable({ table, selectedIds, onDeleteMany }: Props) {
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm text-text">
           <thead>
             {table.getHeaderGroups().map((hg) => (
-              <tr key={hg.id} className="bg-slate-50 border-b border-slate-200">
+              <tr
+                key={hg.id}
+                className="bg-surface/50 border-b border-white/10"
+              >
                 {hg.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap"
+                    className="px-4 py-3 text-left text-xs font-semibold text-text/60 uppercase tracking-wider whitespace-nowrap"
                     style={{ width: header.getSize() }}
                   >
                     {header.isPlaceholder ? null : (
                       <div
                         className={`flex items-center gap-1.5 ${
                           header.column.getCanSort()
-                            ? "cursor-pointer select-none"
+                            ? "cursor-pointer select-none hover:text-text"
                             : ""
                         }`}
                         onClick={header.column.getToggleSortingHandler()}
@@ -64,12 +67,13 @@ export function StockTable({ table, selectedIds, onDeleteMany }: Props) {
               </tr>
             ))}
           </thead>
+
           <tbody>
             {table.getRowModel().rows.length === 0 ? (
               <tr>
                 <td
                   colSpan={table.getAllColumns().length}
-                  className="text-center py-16 text-slate-400"
+                  className="text-center py-16 text-text/50"
                 >
                   <div className="flex flex-col items-center gap-2">
                     <span>Kayıt bulunamadı</span>
@@ -94,11 +98,10 @@ export function StockTable({ table, selectedIds, onDeleteMany }: Props) {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between px-4 py-3 border-t border-slate-200 bg-slate-50">
-        <p className="text-xs text-slate-500">
-          <span className="font-semibold text-slate-700">{totalRows}</span>{" "}
-          kayıttan{" "}
-          <span className="font-semibold text-slate-700">
+      <div className="bg-surface/80 flex items-center justify-between px-4 py-3 border-t border-white/10">
+        <p className="text-xs text-text/60">
+          <span className="font-semibold text-text">{totalRows}</span> kayıttan{" "}
+          <span className="font-semibold text-text">
             {pageIndex * pageSize + 1}–
             {Math.min((pageIndex + 1) * pageSize, totalRows)}
           </span>{" "}
@@ -110,7 +113,7 @@ export function StockTable({ table, selectedIds, onDeleteMany }: Props) {
           <select
             value={pageSize}
             onChange={(e) => table.setPageSize(Number(e.target.value))}
-            className="text-xs border border-slate-200 rounded-lg px-2 py-1.5 text-slate-600 bg-white focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            className="text-xs border border-white/10 px-2 py-1.5 text-text bg-surface focus:ring-2 focus:ring-primary/40 focus:outline-none"
           >
             {[10, 20, 50].map((n) => (
               <option key={n} value={n}>
@@ -124,17 +127,19 @@ export function StockTable({ table, selectedIds, onDeleteMany }: Props) {
             <button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="px-2.5 py-1.5 rounded-lg text-xs font-medium border border-slate-200 text-slate-600 hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="px-2.5 py-1.5 text-xs font-medium border border-white/10 text-text/70 hover:bg-surface disabled:opacity-40 disabled:cursor-not-allowed transition"
             >
               ‹ Önceki
             </button>
-            <span className="px-3 py-1.5 text-xs text-slate-700 font-semibold">
+
+            <span className="px-3 py-1.5 text-xs text-text font-semibold">
               {pageIndex + 1} / {pageCount}
             </span>
+
             <button
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="px-2.5 py-1.5 rounded-lg text-xs font-medium border border-slate-200 text-slate-600 hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="px-2.5 py-1.5 text-xs font-medium border border-white/10 text-text/70 hover:bg-surface disabled:opacity-40 disabled:cursor-not-allowed transition"
             >
               Sonraki ›
             </button>

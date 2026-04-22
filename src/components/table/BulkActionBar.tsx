@@ -9,14 +9,15 @@ const BulkActionBar = memo(function BulkActionBar({
   onDeleteMany: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between px-4 py-2.5 bg-indigo-50 dark:bg-indigo-950 border-b border-indigo-100 dark:border-indigo-900 h-12">
-      <span className="text-sm text-indigo-700 dark:text-indigo-300 font-medium">
+    <div className="bg-surface/80 flex items-center justify-between px-4 py-2.5 border-b border-primary/20 h-12">
+      <span className="text-sm text-text font-medium">
         {count} kayıt seçildi
       </span>
+
       {count > 0 && (
         <button
           onClick={onDeleteMany}
-          className="px-3 py-1.5 text-xs font-semibold text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors"
+          className="px-3 py-1.5 text-xs font-semibold text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
         >
           Seçilileri Sil
         </button>

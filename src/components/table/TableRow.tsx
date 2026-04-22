@@ -18,12 +18,12 @@ export const TableRow = memo(function TableRow({
 
   return (
     <tr
-      className={`border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors ${
-        isSelected ? "bg-indigo-50/50 dark:bg-indigo-950/50" : ""
-      }`}
+      className={`border-b border-white/10 transition-colors  
+    ${isSelected ? "bg-primary/10 dark:bg-surface/50" : "hover:bg-primary/5 dark:hover:bg-surface/20"}
+  `}
     >
       {row.getVisibleCells().map((cell) => (
-        <td key={cell.id} className="px-4 py-3">
+        <td key={cell.id} className="px-4 py-3 text-text">
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </td>
       ))}

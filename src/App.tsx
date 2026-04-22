@@ -1,4 +1,3 @@
-import "./css/global.css";
 import { ThemeProvider } from "./context/ThemeContext";
 import { StocksPage } from "./pages/StocksPage";
 

@@ -1,11 +1,19 @@
 import type { Stock } from "../../types/stock";
-import { useMemo, memo } from "react";
+import { useMemo, memo, useState } from "react";
+import InStockIcon from "../icons/InStockIcon";
+import TotalStockIcon from "../icons/TotalStockIcon";
+import OutStockIcon from "../icons/OutStockIcon";
+import PackageIcon from "../icons/PackageIcon";
+import EyeIcon from "../icons/EyeIcon";
+import EyeOffIcon from "../icons/EyeOffIcon";
 
 interface Props {
   stocks: Stock[];
 }
 
 export const StatsCards = memo(({ stocks }: Props) => {
+  const [open, setOpen] = useState(true);
+
   const stats = useMemo(() => {
     let total = stocks.length;
     let inStock = 0;
@@ -18,54 +26,59 @@ export const StatsCards = memo(({ stocks }: Props) => {
       totalQty += s.quantity;
     }
 
-    return {
-      total,
-      inStock,
-      outStock,
-      totalQty,
-    };
+    return { total, inStock, outStock, totalQty };
   }, [stocks]);
 
   const cards = [
-    {
-      label: "Toplam Ürün",
-      value: stats.total.toLocaleString("tr-TR"),
-      color: "bg-indigo-50 text-indigo-600",
-    },
-    {
-      label: "Stokta",
-      value: stats.inStock.toLocaleString("tr-TR"),
-      color: "bg-emerald-50 text-emerald-600",
-    },
-    {
-      label: "Tükendi",
-      value: stats.outStock.toLocaleString("tr-TR"),
-      color: "bg-red-50 text-red-600",
-    },
-    {
-      label: "Toplam Adet",
-      value: stats.totalQty.toLocaleString("tr-TR"),
-      color: "bg-amber-50 text-amber-600",
-    },
+    { label: "Toplam Ürün", value: stats.total, icon: PackageIcon },
+    { label: "Stokta", value: stats.inStock, icon: InStockIcon },
+    { label: "Tükendi", value: stats.outStock, icon: OutStockIcon },
+    { label: "Toplam Adet", value: stats.totalQty, icon: TotalStockIcon },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {cards.map((c) => (
-        <div
-          key={c.label}
-          className="bg-white rounded-2xl border border-slate-200 shadow-sm flex items-center"
+    <div className="space-y-3 border border-primary/20 p-5 rounded-2xl">
+      {/* HEADER */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-semibold text-text">İstatistikler</h2>
+
+        <button
+          onClick={() => setOpen((p) => !p)}
+          className="text-xs text-text/70 hover:text-text transition flex items-center gap-1"
         >
+          <EyeIcon className={`w-4 h-4 ${open ? "hidden" : "block"}`} />
+          <EyeOffIcon className={`w-4 h-4 ${open ? "block" : "hidden"}`} />
+          {open ? "Gizle" : "Göster"}
+        </button>
+      </div>
+
+      {/* COLLAPSE */}
+      <div
+        className={`grid grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-300 ${
+          open
+            ? "opacity-100 max-h-[500px]"
+            : "opacity-0 max-h-0 overflow-hidden"
+        }`}
+      >
+        {cards.map((c) => (
           <div
-            className={`w-full h-full rounded-xl p-4 flex items-center justify-center text-lg ${c.color}`}
+            key={c.label}
+            className="bg-surface text-text rounded-2xl p-4 flex items-center gap-4 shadow-sm border border-white/10 hover:shadow-md transition-all"
           >
-            <p className="text-xs text-slate-500 font-medium mr-4">
-              {c.label}:
-            </p>
-            <p className="text-xl font-bold text-slate-800">{c.value}</p>
+            {/* ICON */}
+            <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+              <c.icon />
+            </div>
+            {/* TEXT */}
+            <div className="flex flex-col">
+              <span className="text-xs text-text/60">{c.label}</span>
+              <span className="text-xl font-bold text-text">
+                {c.value.toLocaleString("tr-TR")}
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 });

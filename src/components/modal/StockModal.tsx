@@ -36,24 +36,33 @@ export const StockModal = memo(({ open, stock, onClose, onSave }: Props) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* BACKDROP */}
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-background/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
+      {/* MODAL */}
       <form
         onSubmit={handleSubmit(onSave)}
-        className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-lg bg-background dark:bg-surface text-text border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
       >
-        <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+        {/* HEADER */}
+        <div className="px-6 py-4 border-b border-white/10 flex justify-between items-center">
           <h2 className="text-lg font-bold">{stock ? "Düzenle" : "Ekle"}</h2>
-          <button type="button" onClick={onClose} className="cursor-pointer">
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-text/50 hover:text-text transition"
+          >
             ✕
           </button>
         </div>
 
+        {/* CONTENT */}
         <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
-          {/* Product Name */}
+          {/* PRODUCT NAME */}
           <FormField label="Ürün Adı *" error={errors.productName?.message}>
             <Input
               {...register("productName")}
@@ -61,6 +70,7 @@ export const StockModal = memo(({ open, stock, onClose, onSave }: Props) => {
               placeholder="Nike Air Max"
             />
           </FormField>
+
           {/* SKU */}
           <FormField label="SKU *" error={errors.sku?.message}>
             <Input
@@ -69,7 +79,8 @@ export const StockModal = memo(({ open, stock, onClose, onSave }: Props) => {
               placeholder="SKU-1001"
             />
           </FormField>
-          {/* Quantity & Price */}
+
+          {/* QUANTITY + PRICE */}
           <div className="grid grid-cols-2 gap-4">
             <FormField label="Miktar *" error={errors.quantity?.message}>
               <div className="flex gap-2">
@@ -78,6 +89,7 @@ export const StockModal = memo(({ open, stock, onClose, onSave }: Props) => {
                   {...register("quantity", { valueAsNumber: true })}
                   error={!!errors.quantity}
                 />
+
                 <div className="flex gap-1">
                   {[100, 250].map((amount) => (
                     <button
@@ -87,7 +99,7 @@ export const StockModal = memo(({ open, stock, onClose, onSave }: Props) => {
                         const current = getValues("quantity") || 0;
                         setValue("quantity", current + amount);
                       }}
-                      className="px-2 py-1 text-xs font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 cursor-pointer dark:hover:bg-indigo-50 rounded-lg transition-colors whitespace-nowrap"
+                      className="px-2 py-1 text-xs font-medium text-primary border dark:border-white/10 hover:bg-primary/5 transition rounded-lg"
                     >
                       +{amount}
                     </button>
@@ -105,14 +117,13 @@ export const StockModal = memo(({ open, stock, onClose, onSave }: Props) => {
               />
             </FormField>
           </div>
-          {/* Warehouse & Status */}
+
+          {/* WAREHOUSE + STATUS */}
           <div className="grid grid-cols-2 gap-4">
             <FormField label="Depo *" error={errors.warehouse?.message}>
               <select
                 {...register("warehouse")}
-                className={`w-full px-3 py-2 border rounded-lg ${
-                  errors.warehouse ? "border-red-500" : "border-slate-300"
-                }`}
+                className="w-full px-3 py-2 border border-white/10 bg-surface text-text rounded-lg focus:ring-2 focus:ring-primary/40 focus:outline-none"
               >
                 <option value="IST">İstanbul</option>
                 <option value="ANK">Ankara</option>
@@ -123,9 +134,7 @@ export const StockModal = memo(({ open, stock, onClose, onSave }: Props) => {
             <FormField label="Durum *" error={errors.status?.message}>
               <select
                 {...register("status")}
-                className={`w-full px-3 py-2 border rounded-lg ${
-                  errors.status ? "border-red-500" : "border-slate-300"
-                }`}
+                className="w-full px-3 py-2 border border-white/10 bg-surface text-text rounded-lg focus:ring-2 focus:ring-primary/40 focus:outline-none"
               >
                 <option value="IN">Stokta</option>
                 <option value="OUT">Tükendi</option>
@@ -133,23 +142,23 @@ export const StockModal = memo(({ open, stock, onClose, onSave }: Props) => {
             </FormField>
           </div>
 
-          {/* Description */}
+          {/* DESCRIPTION */}
           <FormField label="Açıklama" error={errors.description?.message}>
             <textarea
               {...register("description")}
-              className={`w-full px-3 py-2 border rounded-lg ${
-                errors.description ? "border-red-500" : "border-slate-300"
-              }`}
-              placeholder="Ürünle ilgili açıklama..."
               rows={3}
+              className="w-full px-3 py-2 border border-white/10 bg-surface text-text rounded-lg focus:ring-2 focus:ring-primary/40 focus:outline-none"
+              placeholder="Ürünle ilgili açıklama..."
             />
           </FormField>
         </div>
 
-        <div className="px-6 py-4 bg-slate-50 border-t flex justify-end gap-3">
+        {/* FOOTER */}
+        <div className="px-6 py-4 bg-background border-t border-white/10 flex justify-end gap-3">
           <ModalButton variant="secondary" type="button" onClick={onClose}>
             İptal
           </ModalButton>
+
           <ModalButton variant="primary" type="submit" disabled={isSubmitting}>
             {stock ? "Güncelle" : "Ekle"}
           </ModalButton>
